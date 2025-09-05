@@ -1,0 +1,29 @@
+/* Header Styles */
+.app-header {
+  background-color: #282c34;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.game-title {
+  font-family: 'Avenir Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .game-title {
+    font-size: 2rem;
+  }
+  
+  .app-header {
+    padding: 0.75rem 0;
+  }
+}

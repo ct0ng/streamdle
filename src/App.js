@@ -4,6 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import AuthPage from "./components/AuthPage";
 import PageTransition from "./components/PageTransition";
 import StreamdleGame from './components/StreamdleGame';
+import Header from './components/Header';
 import { useAuth } from './hooks/useAuth';
 
 function App() {
@@ -12,16 +13,18 @@ function App() {
   if (loading) {
     return (
       <div className="App">
-        <header className="App-header">
+        <Header />
+        <main className="App-main">
           <div>Loading...</div>
-        </header>
+        </main>
       </div>
     );
   }
 
   return (
     <div className="App">
-      <header className="App-header">
+      <Header />
+      <main className="App-main">
         <AnimatePresence mode="wait">
           {!authenticated ? (
             <PageTransition key="password">
@@ -33,7 +36,7 @@ function App() {
             </PageTransition>
           )}
         </AnimatePresence>
-      </header>
+      </main>
     </div>
   );
 }

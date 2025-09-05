@@ -2,9 +2,9 @@
   text-align: center;
 }
 
-.App-header {
+.App-main {
   background-color: #282c34;
-  min-height: 100vh;
+  height: calc(100vh - 80px); /* Fixed height instead of min-height */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,6 +12,8 @@
   font-size: calc(10px + 2vmin);
   color: white;
   padding: 20px;
+  box-sizing: border-box; /* Include padding in height calculation */
+  overflow: hidden; /* Prevent any overflow */
 }
 
 /* Shared Button Styles */
