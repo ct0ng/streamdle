@@ -3,7 +3,7 @@
 }
 
 .App-main {
-  background-color: #282c34;
+  background-color: #121212;
   height: calc(100vh - 80px); /* Fixed height instead of min-height */
   display: flex;
   flex-direction: column;
@@ -21,8 +21,8 @@
 .finish-button,
 .play-again-button,
 .retry-button {
-  background: #61dafb;
-  color: #282c34;
+  background: #1DB954;
+  color: #ffffff;
   border: none;
   padding: 12px 24px;
   border-radius: 6px;
@@ -36,5 +36,5 @@
 .finish-button:hover,
 .play-again-button:hover,
 .retry-button:hover {
-  background: #4fa8c5;
+  background: #1ed760;
 }

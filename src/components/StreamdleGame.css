@@ -12,7 +12,7 @@
 .round-title {
   font-size: 1.5rem;
   margin: 0 0 0.5rem 0;
-  color: #61dafb;
+  color: #ffffff;
 }
 
 .score {
@@ -43,7 +43,7 @@
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  border: 2px solid #ccc;
+  border: 2px solid #333333;
   border-radius: 12px;
   cursor: pointer;
   text-align: center;
@@ -55,9 +55,9 @@
 }
 
 .song-card:hover {
-  border-color: #61dafb;
+  border-color: #1DB954;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(97, 218, 251, 0.3);
+  box-shadow: 0 4px 12px rgba(29, 185, 84, 0.3);
 }
 
 .song-card.correct {
@@ -100,7 +100,7 @@
 }
 
 .game-over h2 {
-  color: #28a745;
+  color: #ffffff;
   margin-bottom: 1rem;
 }
 
@@ -113,7 +113,7 @@
 /* Loading and Error States */
 .loading {
   font-size: 1.2rem;
-  color: #61dafb;
+  color: #ffffff;
 }
 
 .error {
