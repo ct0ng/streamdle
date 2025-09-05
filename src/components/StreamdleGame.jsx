@@ -69,16 +69,18 @@ export default function StreamdleGame() {
         })}
       </div>
 
-      {selected && (
-        <div className="game-feedback">
-          <p className="result-text">{result}</p>
-          {currentRound < pairs.length - 1 ? (
-            <button onClick={handleNext} className="next-button">Next</button>
-          ) : (
-            <button onClick={handleNext} className="finish-button">Finish</button>
-          )}
-        </div>
-      )}
+      <div className="game-feedback">
+        {selected && (
+          <>
+            <p className="result-text">{result}</p>
+            {currentRound < pairs.length - 1 ? (
+              <button onClick={handleNext} className="next-button">Next</button>
+            ) : (
+              <button onClick={handleNext} className="finish-button">Finish</button>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }
