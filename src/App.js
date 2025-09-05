@@ -1,35 +1,38 @@
 import './App.css';
-import { useState, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
+
 import AuthPage from "./components/AuthPage";
+import PageTransition from "./components/PageTransition";
 import StreamdleGame from './components/StreamdleGame';
-import { jwtDecode } from "jwt-decode";
+import { useAuth } from './hooks/useAuth';
 
 function App() {
-  const [authenticated, setAuthenticated] = useState(false);
+  const { authenticated, loading, login } = useAuth();
 
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
-        if (decoded.exp * 1000 > Date.now()) {
-          setAuthenticated(true);
-        }
-      } catch {
-        localStorage.removeItem("authToken");
-      }
-    }
-  }, []);
-
-  if (!authenticated) {
-    return <AuthPage onAuthenticated={() => setAuthenticated(true)} />;
+  if (loading) {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <div>Loading...</div>
+        </header>
+      </div>
+    );
   }
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>streamdle</h1>
-          <StreamdleGame />
+        <AnimatePresence mode="wait">
+          {!authenticated ? (
+            <PageTransition key="password">
+              <AuthPage onAuthenticated={login} />
+            </PageTransition>
+          ) : (
+            <PageTransition key="game">
+              <StreamdleGame />
+            </PageTransition>
+          )}
+        </AnimatePresence>
       </header>
     </div>
   );

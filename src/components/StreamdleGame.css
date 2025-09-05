@@ -1,0 +1,145 @@
+/* Game Styles */
+.game-container {
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.game-header {
+  margin-bottom: 2rem;
+}
+
+.round-title {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+  color: #61dafb;
+}
+
+.score {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #ffffff;
+}
+
+.game-question {
+  font-size: 1.3rem;
+  margin: 0 0 2rem 0;
+  color: #ffffff;
+}
+
+.songs-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.song-card {
+  width: 400px;
+  height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+  overflow: hidden;
+  white-space: normal;
+  background: #1a1a1a;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.song-card:hover {
+  border-color: #61dafb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(97, 218, 251, 0.3);
+}
+
+.song-card.correct {
+  background: #d4edda;
+  border-color: #28a745;
+  color: #155724;
+}
+
+.song-card.wrong {
+  background: #f8d7da;
+  border-color: #dc3545;
+  color: #721c24;
+}
+
+.song-title {
+  font-weight: bold;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.song-artist {
+  font-size: 0.9rem;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.game-feedback {
+  margin-top: 1rem;
+}
+
+.result-text {
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+  font-weight: bold;
+}
+
+.game-over {
+  text-align: center;
+}
+
+.game-over h2 {
+  color: #28a745;
+  margin-bottom: 1rem;
+}
+
+.final-score {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+}
+
+/* Loading and Error States */
+.loading {
+  font-size: 1.2rem;
+  color: #61dafb;
+}
+
+.error {
+  text-align: center;
+  color: #f8d7da;
+}
+
+.error h2 {
+  color: #dc3545;
+  margin-bottom: 1rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .songs-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .song-card {
+    width: 100%;
+    max-width: 350px;
+    height: 280px;
+  }
+  
+  .game-question {
+    font-size: 1.1rem;
+  }
+}

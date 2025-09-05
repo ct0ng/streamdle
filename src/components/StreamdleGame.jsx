@@ -1,113 +1,81 @@
-import { useState, useEffect } from "react";
-import { supabaseClient } from "../supabaseClient.js";
+import { useGame } from "../hooks/useGame";
+import { MESSAGES } from "../constants/game.js";
+import "./StreamdleGame.css";
 
-export default function SongMatchupGame() {
-  const [pairs, setPairs] = useState([]);
-  const [currentRound, setCurrentRound] = useState(0);
-  const [selected, setSelected] = useState(null);
-  const [result, setResult] = useState(null);
-  const [score, setScore] = useState(0);
+export default function StreamdleGame() {
+  const {
+    pairs,
+    currentRound,
+    selected,
+    result,
+    score,
+    loading,
+    error,
+    isGameOver,
+    currentPair,
+    handleGuess,
+    handleNext,
+    fetchRounds
+  } = useGame();
 
-  const fetchRounds = async () => {
-    setSelected(null);
-    setResult(null);
-    setScore(0);
-    setCurrentRound(0);
+  if (loading) {
+    return <div className="loading">{MESSAGES.LOADING}</div>;
+  }
 
-    const { data, error } = await supabaseClient().rpc('get_random_songs');
-
-    if (error) {
-      console.error("Error fetching songs:", error);
-      return;
-    }
-
-    const grouped = [];
-    for (let i = 0; i < data.length; i += 2) {
-      grouped.push([data[i], data[i + 1]]);
-    }
-    setPairs(grouped);
-  };
-
-  useEffect(() => {
-    fetchRounds();
-  }, []);
-
-  const handleGuess = (id) => {
-    if (selected) return;
-    const [a, b] = pairs[currentRound];;
-    const correctId = a.stream_count > b.stream_count ? a.song_id : b.song_id;
-    setSelected(id);
-    const isCorrect = id === correctId;
-    setResult(isCorrect ? "✅ Correct!" : "❌ Wrong");
-    if (isCorrect) setScore((prev) => prev + 1);
-  };
-
-  const handleNext = () => {
-    setSelected(null);
-    setResult(null);
-    setCurrentRound((prev) => prev + 1);
-  };
-
-  if (pairs.length === 0) return <div>Loading...</div>;
-
-  if (currentRound >= pairs.length) {
+  if (error) {
     return (
-      <div style={{ textAlign: "center" }}>
-        <h2>Game Over 🎉</h2>
-        <p>Your Score: {score} / {pairs.length}</p>
-        <button onClick={fetchRounds}>Play Again</button>
+      <div className="error">
+        <h2>Error</h2>
+        <p>{error}</p>
+        <button onClick={fetchRounds} className="retry-button">Try Again</button>
       </div>
     );
   }
 
-  const pair = pairs[currentRound];
+  if (isGameOver) {
+    return (
+      <div className="game-over">
+        <h2>{MESSAGES.GAME_OVER}</h2>
+        <p className="final-score">Your Score: {score} / {pairs.length}</p>
+        <button onClick={fetchRounds} className="play-again-button">Play Again</button>
+      </div>
+    );
+  }
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h2>Round {currentRound + 1} of {pairs.length}</h2>
-      <p>Score: {score}</p>
-      <h3>Which song has more Spotify streams?</h3>
+    <div className="game-container">
+      <div className="game-header">
+        <h2 className="round-title">Round {currentRound + 1} of {pairs.length}</h2>
+        <p className="score">Score: {score}</p>
+      </div>
+      
+      <h3 className="game-question">{MESSAGES.QUESTION}</h3>
 
-      <div style={{ display: "flex", justifyContent: "center", gap: "2rem" }}>
-        {pair.map((song) => (
-          <div
-            key={song.song_id}
-            style={{
-              width: "400px",
-              height: "340px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              padding: "1rem",
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              cursor: "pointer",
-              textAlign: "center",
-              overflow: "hidden",
-              whiteSpace: "normal",
-              background:
-              selected === song.song_id
-                ? song.stream_count === Math.max(pair[0].stream_count, pair[1].stream_count)
-                  ? "#d4edda" // green for correct
-                  : "#f8d7da" // red for wrong
-                : "#000000ff",  // light blue default
-            }}
-            onClick={() => handleGuess(song.song_id)}
-          >
-            <p style={{ fontWeight: "bold", margin: "0 0 0.5rem" }}>{song.title}</p>
-            <p style={{ fontSize: "0.9rem", margin: 0, color: "#dac2c2ff" }}>{song.artist_name}</p>
-          </div>
-        ))}
+      <div className="songs-container">
+        {currentPair.map((song) => {
+          const isSelected = selected === song.song_id;
+          const isCorrect = song.stream_count === Math.max(currentPair[0].stream_count, currentPair[1].stream_count);
+          
+          return (
+            <div
+              key={song.song_id}
+              className={`song-card ${isSelected ? (isCorrect ? 'correct' : 'wrong') : ''}`}
+              onClick={() => handleGuess(song.song_id)}
+            >
+              <p className="song-title">{song.title}</p>
+              <p className="song-artist">{song.artist_name}</p>
+            </div>
+          );
+        })}
       </div>
 
       {selected && (
-        <div style={{ marginTop: "1rem" }}>
-          <p>{result}</p>
+        <div className="game-feedback">
+          <p className="result-text">{result}</p>
           {currentRound < pairs.length - 1 ? (
-            <button onClick={handleNext}>Next</button>
+            <button onClick={handleNext} className="next-button">Next</button>
           ) : (
-            <button onClick={() => setCurrentRound((prev) => prev + 1)}>Finish</button>
+            <button onClick={handleNext} className="finish-button">Finish</button>
           )}
         </div>
       )}
