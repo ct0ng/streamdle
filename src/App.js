@@ -7,6 +7,7 @@ import PageTransition from "./components/PageTransition";
 import StreamdleGame from './components/StreamdleGame';
 import MainMenu from './components/MainMenu';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import { useAuth } from './hooks/useAuth';
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
           {renderCurrentView()}
         </AnimatePresence>
       </main>
+      {authenticated && <Footer />}
     </div>
   );
 }
