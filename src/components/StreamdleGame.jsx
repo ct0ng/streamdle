@@ -1,6 +1,7 @@
 import { useGame } from "../hooks/useGame";
 import { MESSAGES } from "../constants/game.js";
 import "./StreamdleGame.css";
+import { useEffect, useState } from "react";
 
 export default function StreamdleGame({ onGameOver, onPlayAgain }) {
   const {
@@ -17,6 +18,34 @@ export default function StreamdleGame({ onGameOver, onPlayAgain }) {
     handleNext,
     fetchRounds
   } = useGame();
+
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Auto-advance to next round after 3 seconds when user makes a guess
+  useEffect(() => {
+    if (selected && !isGameOver) {
+      // Start transition after 2 seconds (1 second before advance)
+      const transitionTimer = setTimeout(() => {
+        setIsTransitioning(true);
+      }, 2000);
+
+      // Auto-advance timer
+      const advanceTimer = setTimeout(() => {
+        handleNext();
+        // Keep transition state for a bit longer to ensure smooth transition
+        setTimeout(() => {
+          setIsTransitioning(false);
+        }, 100);
+      }, 3000);
+
+      return () => {
+        clearTimeout(transitionTimer);
+        clearTimeout(advanceTimer);
+      };
+    } else {
+      setIsTransitioning(false);
+    }
+  }, [selected, isGameOver, handleNext]);
 
   if (loading) {
     return <div className="loading">{MESSAGES.LOADING}</div>;
@@ -54,7 +83,7 @@ export default function StreamdleGame({ onGameOver, onPlayAgain }) {
       
       <h3 className="game-question">{MESSAGES.QUESTION}</h3>
 
-      <div className="songs-container">
+      <div className={`songs-container ${isTransitioning ? 'transitioning' : ''}`}>
         {currentPair.map((song) => {
           const isSelected = selected === song.song_id;
           const isCorrect = song.stream_count === Math.max(currentPair[0].stream_count, currentPair[1].stream_count);
@@ -62,8 +91,8 @@ export default function StreamdleGame({ onGameOver, onPlayAgain }) {
           return (
             <div
               key={song.song_id}
-              className={`song-card ${isSelected ? (isCorrect ? 'correct' : 'wrong') : ''}`}
-              onClick={() => handleGuess(song.song_id)}
+              className={`song-card ${isSelected ? (isCorrect ? 'correct' : 'wrong') : ''} ${isTransitioning ? 'fade-out' : 'fade-in'}`}
+              onClick={() => !isTransitioning && handleGuess(song.song_id)}
             >
               <p className="song-title">{song.title}</p>
               <p className="song-artist">{song.artist_name}</p>
@@ -76,11 +105,6 @@ export default function StreamdleGame({ onGameOver, onPlayAgain }) {
         {selected && (
           <>
             <p className="result-text">{result}</p>
-            {currentRound < pairs.length - 1 ? (
-              <button onClick={handleNext} className="next-button">Next</button>
-            ) : (
-              <button onClick={handleNext} className="finish-button">Finish</button>
-            )}
           </>
         )}
       </div>

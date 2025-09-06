@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabaseClient } from "../supabaseClient.js";
 import { MESSAGES } from "../constants/game.js";
 
@@ -56,11 +56,11 @@ export function useGame() {
     if (isCorrect) setScore((prev) => prev + 1);
   };
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setSelected(null);
     setResult(null);
     setCurrentRound((prev) => prev + 1);
-  };
+  }, []); // Empty dependency array since it only uses state setters
 
   const isGameOver = currentRound >= pairs.length;
   const currentPair = pairs[currentRound];
