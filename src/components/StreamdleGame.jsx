@@ -2,7 +2,7 @@ import { useGame } from "../hooks/useGame";
 import { MESSAGES } from "../constants/game.js";
 import "./StreamdleGame.css";
 
-export default function StreamdleGame() {
+export default function StreamdleGame({ onGameOver, onPlayAgain }) {
   const {
     pairs,
     currentRound,
@@ -37,7 +37,10 @@ export default function StreamdleGame() {
       <div className="game-over">
         <h2>{MESSAGES.GAME_OVER}</h2>
         <p className="final-score">Your Score: {score} / {pairs.length}</p>
-        <button onClick={fetchRounds} className="play-again-button">Play Again</button>
+        <div className="game-over-buttons">
+          <button onClick={onPlayAgain} className="play-again-button">Play Again</button>
+          <button onClick={onGameOver} className="main-menu-button">Main Menu</button>
+        </div>
       </div>
     );
   }

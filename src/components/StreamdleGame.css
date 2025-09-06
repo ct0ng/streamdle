@@ -129,6 +129,31 @@
   color: #ffffff;
 }
 
+.game-over-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.main-menu-button {
+  background: #333333;
+  color: #ffffff;
+  border: 2px solid #555555;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.main-menu-button:hover {
+  background: #555555;
+  border-color: #777777;
+  transform: translateY(-1px);
+}
+
 /* Loading and Error States */
 .loading {
   font-size: 1.2rem;
