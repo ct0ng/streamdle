@@ -17,3 +17,42 @@
   padding: 20px;
   box-sizing: border-box;
 }
+
+/* Shared Button Styles */
+.play-again-button,
+.retry-button {
+  background: #1DB954;
+  color: #ffffff;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.play-again-button:hover,
+.retry-button:hover {
+  background: #1ed760;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(29, 185, 84, 0.4);
+}
+
+.play-again-button:active,
+.retry-button:active {
+  transform: translateY(-1px) scale(0.98);
+  transition: all 0.1s ease;
+}
+
+/* Mobile Responsive for Shared Buttons */
+@media (max-width: 768px) {
+  .play-again-button,
+  .retry-button {
+    font-size: 1.1rem;
+    padding: 14px 28px;
+  }
+}
