@@ -94,7 +94,7 @@ export default function StreamdleGame({ onGameOver, onPlayAgain }) {
               className={`song-card ${isSelected ? (isCorrect ? 'correct' : 'wrong') : ''} ${isTransitioning ? 'fade-out' : 'fade-in'}`}
               onClick={() => !isTransitioning && handleGuess(song.song_id)}
             >
-              <p className="song-title">{song.title}</p>
+              <p className="song-name">{song.song_name}</p>
               <p className="song-artist">{song.artist_name}</p>
             </div>
           );
