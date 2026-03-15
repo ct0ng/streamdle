@@ -19,6 +19,8 @@
 
 Streamdle is a web-based guessing game inspired by -dle games (think Wordle!), where players try to guess which of two songs has more Spotify streams. The app is built with React and uses Supabase for backend data storage. Authentication is handled through Netlify Functions with password-based JWT tokens.
 
+Song data is populated using a separate Python scraper that collects Spotify stream data from [kworb.net](https://kworb.net) and Spotify album photos from [Spotify’s oEmbed API](https://developer.spotify.com/documentation/embeds/tutorials/using-the-oembed-api). See the [streamdle-song-scraper](https://github.com/ct0ng/streamdle-song-scraper) repository for more information.
+
 ## Getting Started
 
 ### Prerequisites
@@ -110,6 +112,9 @@ JWT_SECRET=your-jwt-secret-key
    **Important:** The Supabase credentials (`REACT_APP_SUPABASE_URL` and `REACT_APP_SUPABASE_ANON_KEY`) are required. The app will throw an error if these environment variables are missing.
    
    For production deployments on Netlify, set these environment variables in your Netlify dashboard (Site settings → Environment variables). The `netlify.toml` file is already included in the project.
+
+6. Populate the database with song data
+   To populate your database with song data, you'll need to use the [streamdle-song-scraper](https://github.com/ct0ng/streamdle-song-scraper) Python script. Follow the instructions in that repository to scrape Spotify stream data and update your PostgreSQL database.
 
 ## Usage
 
