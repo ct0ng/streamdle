@@ -7,6 +7,7 @@ export function useGame() {
   const [currentRound, setCurrentRound] = useState(0);
   const [selected, setSelected] = useState(null);
   const [score, setScore] = useState(0);
+  const [roundResults, setRoundResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -14,6 +15,7 @@ export function useGame() {
     setCurrentRound(0);
     setSelected(null);
     setScore(0);
+    setRoundResults([]);
     setLoading(true);
     setError(null);
 
@@ -50,6 +52,11 @@ export function useGame() {
     const correctId = a.stream_count > b.stream_count ? a.song_id : b.song_id;
     setSelected(id);
     const isCorrect = id === correctId;
+    setRoundResults((prev) => {
+      const next = [...prev];
+      next[currentRound] = isCorrect;
+      return next;
+    });
     if (isCorrect) setScore((prev) => prev + 1);
   };
 
@@ -63,9 +70,9 @@ export function useGame() {
 
   return {
     pairs,
-    currentRound,
     selected,
     score,
+    roundResults,
     loading,
     error,
     isGameOver,

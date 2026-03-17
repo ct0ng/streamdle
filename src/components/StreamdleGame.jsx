@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 export default function StreamdleGame({ onGameOver, onPlayAgain }) {
   const {
     pairs,
-    currentRound,
     selected,
     score,
+    roundResults,
     loading,
     error,
     isGameOver,
@@ -76,8 +76,23 @@ export default function StreamdleGame({ onGameOver, onPlayAgain }) {
   return (
     <div className="game-container">
       <div className="game-header">
-        <h2 className="round-title">Round {currentRound + 1} of {pairs.length}</h2>
-        <p className="score">Score: {score}</p>
+        <div className="round-indicator">
+          {Array.from({ length: 5 }).map((_, index) => {
+            const result = roundResults?.[index];
+            const circleClass = result === undefined
+              ? "round-circle"
+              : result
+                ? "round-circle correct"
+                : "round-circle wrong";
+
+            return (
+              <span
+                key={index}
+                className={circleClass}
+              />
+            );
+          })}
+        </div>
       </div>
       
       <h3 className="game-question">{MESSAGES.QUESTION}</h3>
