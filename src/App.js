@@ -8,20 +8,24 @@ import StreamdleGame from './components/StreamdleGame';
 import MainMenu from './components/MainMenu';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import SideNav from './components/SideNav';
 import { useAuth } from './hooks/useAuth';
 
 function App() {
   const { authenticated, loading, login } = useAuth();
   const [currentView, setCurrentView] = useState('menu');
   const [gameKey, setGameKey] = useState(0);
+  const [navOpen, setNavOpen] = useState(false);
 
   if (loading) {
     return (
       <div className="App">
         <Header />
-        <main className="App-main">
-          <div>Loading...</div>
-        </main>
+        <div className="App-body">
+          <main className="App-main">
+            <div>Loading...</div>
+          </main>
+        </div>
       </div>
     );
   }
@@ -66,12 +70,28 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <main className="App-main">
-        <AnimatePresence mode="wait">
-          {renderCurrentView()}
-        </AnimatePresence>
-      </main>
+      <Header
+        showMenuButton={authenticated}
+        onMenuToggle={() => setNavOpen((open) => !open)}
+      />
+      {authenticated && (
+        <SideNav
+          isOpen={navOpen}
+          onClose={() => setNavOpen(false)}
+          currentView={currentView}
+          onNavigate={(view) => {
+            setCurrentView(view);
+            setNavOpen(false);
+          }}
+        />
+      )}
+      <div className="App-body">
+        <main className="App-main">
+          <AnimatePresence mode="wait">
+            {renderCurrentView()}
+          </AnimatePresence>
+        </main>
+      </div>
       {authenticated && <Footer />}
     </div>
   );
