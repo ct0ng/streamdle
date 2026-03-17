@@ -6,7 +6,6 @@ export function useGame() {
   const [pairs, setPairs] = useState([]);
   const [currentRound, setCurrentRound] = useState(0);
   const [selected, setSelected] = useState(null);
-  const [result, setResult] = useState(null);
   const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -14,7 +13,6 @@ export function useGame() {
   const fetchRounds = async () => {
     setCurrentRound(0);
     setSelected(null);
-    setResult(null);
     setScore(0);
     setLoading(true);
     setError(null);
@@ -52,13 +50,11 @@ export function useGame() {
     const correctId = a.stream_count > b.stream_count ? a.song_id : b.song_id;
     setSelected(id);
     const isCorrect = id === correctId;
-    setResult(isCorrect ? MESSAGES.CORRECT : MESSAGES.WRONG);
     if (isCorrect) setScore((prev) => prev + 1);
   };
 
   const handleNext = useCallback(() => {
     setSelected(null);
-    setResult(null);
     setCurrentRound((prev) => prev + 1);
   }, []); // Empty dependency array since it only uses state setters
 
@@ -69,7 +65,6 @@ export function useGame() {
     pairs,
     currentRound,
     selected,
-    result,
     score,
     loading,
     error,

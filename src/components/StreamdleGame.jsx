@@ -8,7 +8,6 @@ export default function StreamdleGame({ onGameOver, onPlayAgain }) {
     pairs,
     currentRound,
     selected,
-    result,
     score,
     loading,
     error,
@@ -118,13 +117,6 @@ export default function StreamdleGame({ onGameOver, onPlayAgain }) {
         })}
       </div>
 
-      <div className="game-feedback">
-        {selected && (
-          <>
-            <p className="result-text">{result}</p>
-          </>
-        )}
-      </div>
     </div>
   );
 }

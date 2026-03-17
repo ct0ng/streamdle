@@ -223,12 +223,6 @@
   justify-content: center;
 }
 
-.result-text {
-  font-size: 1.2rem;
-  margin: 0 0 1rem 0;
-  font-weight: bold;
-}
-
 .game-over {
   text-align: center;
 }
