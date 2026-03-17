@@ -41,7 +41,8 @@ export default function StreamdleGame({ onGameOver, onPlayAgain }) {
         clearTimeout(transitionTimer);
         clearTimeout(advanceTimer);
       };
-    } else {
+    } else if (!isGameOver) {
+      // case after selected is cleared (null) and the game is not over yet
       setIsTransitioning(false);
     }
   }, [selected, isGameOver, handleNext]);
