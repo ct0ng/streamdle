@@ -37,6 +37,35 @@
   padding: 1.5rem 0;
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto; /* ensures bottom section can push to the real bottom */
+  min-height: 0;
+}
+
+.side-nav-top {
+  flex: 0 0 auto;
+}
+
+.side-nav-bottom {
+  margin-top: auto;
+  flex: 0 0 auto;
+}
+
+.side-nav-bottom-group {
+  padding-bottom: 1rem;
+}
+
+.side-nav-divider {
+  height: 1px;
+  background: #333333;
+  margin: 0 0.75rem 0.75rem;
+}
+
+.side-nav-bottom-label {
+  padding: 0 0.75rem 0.5rem;
+  color: #bdbdbd;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .side-nav-list {

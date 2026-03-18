@@ -8,7 +8,7 @@ const Header = ({ showMenuButton, onMenuToggle }) => {
           {showMenuButton && (
             <button
               type="button"
-              className="app-menu-button"
+              className="app-menu-button app-menu-button-wrapper"
               onClick={onMenuToggle}
               aria-label="Toggle menu"
             >

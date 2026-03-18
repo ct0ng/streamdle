@@ -43,6 +43,13 @@
   transition: all 0.3s ease;
 }
 
+.app-menu-button-wrapper {
+  position: absolute;
+  left: 8px; /* minor padding from the screen edge */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .app-menu-button:hover {
   background: #1a1a1a;
   border-color: #333333;
